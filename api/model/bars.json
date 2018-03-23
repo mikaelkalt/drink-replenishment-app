@@ -1,0 +1,27 @@
+[
+    {
+        "name": "Airport Bar", 
+        "drinks": [
+            {
+                "name": "Ice Tea (0.5l)",
+                "category": "SOFT_DRINKS", 
+                "interval": 1
+            },
+            {
+                "name": "Feldschlösschen Original (0.33l)",
+                "category": "BEER_WINE", 
+                "interval": 1
+            },
+            {
+                "name": "Vodka White",
+                "category": "SPIRITS", 
+                "interval": 1
+            },
+            {
+                "name": "Shotbecher",
+                "category": "MATERIAL", 
+                "interval": 2
+            }
+        ]
+    }
+]
