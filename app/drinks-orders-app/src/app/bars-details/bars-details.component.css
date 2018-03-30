@@ -1,0 +1,4 @@
+.order-button {
+    margin: 10px 5px;
+    width: calc(100% - 10px);
+}

@@ -1,0 +1,41 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button (click)="goBack()">
+    <mat-icon class="back-icon">arrow_back</mat-icon>
+  </button>
+  <span>{{bar.name}}</span>
+</mat-toolbar>
+
+
+<mat-list>
+  <h3 mat-subheader>Soft Drinks</h3>
+  <mat-list-item *ngFor="let order of getDrinksOfCategory(drinkCategories.SOFT_DRINKS)">
+    <h4 mat-line>{{order.drink}}</h4>
+    <span *ngIf="order.amount">{{order.amount}}</span>
+    <mat-slider min="1" max="{{5 * order.interval}}" step="order.interval" [(ngModel)]="order.amount"></mat-slider>
+  </mat-list-item>
+  <mat-divider></mat-divider>
+  <h3 mat-subheader>Bier und Wein</h3>
+  <mat-list-item *ngFor="let order of getDrinksOfCategory(drinkCategories.BEER_WINE)">
+    <h4 mat-line>{{order.drink}}</h4>
+    <mat-slider min="1" max="{{5 * order.interval}}" step="order.interval" thumbLabel [(ngModel)]="order.amount"></mat-slider>
+  </mat-list-item>
+  <mat-divider></mat-divider>
+  <h3 mat-subheader>Spirituosen</h3>
+  <mat-list-item *ngFor="let order of getDrinksOfCategory(drinkCategories.SPIRITS)">
+    <h4 mat-line>{{order.drink}}</h4>
+    <span *ngIf="order.amount">{{order.amount}}</span>
+    <mat-slider min="1" max="{{5 * order.interval}}" step="order.interval" [(ngModel)]="order.amount"></mat-slider>
+  </mat-list-item>
+  <mat-divider></mat-divider>
+  <h3 mat-subheader>Material</h3>
+  <mat-list-item *ngFor="let order of getDrinksOfCategory(drinkCategories.MATERIAL)">
+      <h4 mat-line>{{order.drink}}</h4>
+      <span *ngIf="order.amount">{{order.amount}}</span>
+      <mat-slider min="1" max="{{5 * order.interval}}" step="order.interval" [(ngModel)]="order.amount"></mat-slider>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+</mat-list>
+
+<button class="order-button" mat-raised-button color="primary">
+  Bestellen
+</button>
