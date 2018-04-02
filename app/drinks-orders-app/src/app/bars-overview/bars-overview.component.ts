@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class BarsOverviewComponent implements OnInit {
 
-  title = 'Baranoia';
+  title = 'Baranoia 2018';
   bars: Bar[];
 
   constructor(private router: Router, private barService: BarsService) {

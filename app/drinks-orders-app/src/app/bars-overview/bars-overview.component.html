@@ -1,12 +1,13 @@
-<mat-toolbar color="primary">
-  <span>{{title}}</span>
+<mat-toolbar color="background" class="mat-elevation-z2">
+  <mat-toolbar-row>
+    <span class="toolbar-title">{{title}}</span>
+  </mat-toolbar-row>
 </mat-toolbar>
 
 <mat-nav-list>
   <mat-list-item *ngFor="let bar of bars" (click)="showBar(bar)">
-    <mat-icon matListIcon>folder</mat-icon>
     <div matLine>
-      <span>{{ bar.name }}</span>
+      <span>{{bar.name}}</span>
     </div>
     <mat-icon>chevron_right</mat-icon>
     <mat-divider></mat-divider>

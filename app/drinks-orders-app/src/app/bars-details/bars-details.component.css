@@ -1,4 +1,9 @@
 .order-button {
-    margin: 10px 5px;
+    margin: 20px 5px;
     width: calc(100% - 10px);
+}
+
+.amount {
+    margin-right: 5px;
+    color: #ffea00;
 }

@@ -6,13 +6,18 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { BarsOverviewComponent } from './bars-overview/bars-overview.component';
 import { BarsService } from './bars.service';
 import { BarsDetailsComponent } from './bars-details/bars-details.component';
 import { AppRoutingModule } from './/app-routing.module';
+import { OrderService } from './order.service';
+import { OrdersComponent } from './orders/orders.component';
 
 
 
@@ -20,7 +25,8 @@ import { AppRoutingModule } from './/app-routing.module';
   declarations: [
     AppComponent,
     BarsOverviewComponent,
-    BarsDetailsComponent
+    BarsDetailsComponent,
+    OrdersComponent
   ],
   imports: [
     BrowserModule,
@@ -31,9 +37,11 @@ import { AppRoutingModule } from './/app-routing.module';
     MatListModule,
     MatButtonModule,
     MatSliderModule,
+    MatSnackBarModule,
+    HttpClientModule,
     AppRoutingModule
   ],
-  providers: [BarsService],
+  providers: [BarsService, OrderService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
