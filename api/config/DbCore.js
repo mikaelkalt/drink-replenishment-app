@@ -22,13 +22,13 @@ module.exports = class DbCore {
       supportBigNumbers: true,
       waitForConnections: true, // waitForConnections: Determines the pool's action when no connections are available and the limit has been reached. If true, the pool will queue the connection request and call it when one becomes available. If false, the pool will immediately call back with an error. (Default: true)
       connectionLimit: 10, // The maximum number of connections to create at once.
-      typeCast: function castField( field, useDefaultTypeCasting ) {
+      typeCast: function castField(field, useDefaultTypeCasting) {
         if ((field.type === "TINY") && (field.length === 1)) {
-            const value = field.string();
-            return value === "1";
+          const value = field.string();
+          return value === "1";
         }
         return useDefaultTypeCasting();
-    }
+      }
     };
 
     this.pool = mysql.createPool(dbProperties);
@@ -66,6 +66,23 @@ module.exports = class DbCore {
     });
   }
 
+  multiInsert(tableName, sanitizedEntities) {
+
+    if (sanitizedEntities.length < 1) {
+      return;
+    }
+    const columns = Object.keys(sanitizedEntities[0]);
+    const values = sanitizedEntities.reduce((flat, val) => {
+      flat.push(Object.values(val));
+      return flat;
+    }, []);
+
+    return Promise.using(this.getSqlConnection(), connection => {
+      const sql = `INSERT INTO ${tableName} ( ${columns}) VALUES ?`;
+      return connection.queryAsync(sql, [values]);
+    });
+  }
+
   getAll(tableName) {
     return Promise.using(this.getSqlConnection(), connection => {
       const sql = `SELECT * FROM ${tableName}`;
@@ -81,7 +98,7 @@ module.exports = class DbCore {
       const sql = `SELECT * FROM ${tableName} WHERE ${fieldName} = ?`;
       // eslint-disable-next-line no-unused-vars
       return connection.queryAsync(sql, fieldValue).then((rows, cols) => {
-          return rows;
+        return rows;
       });
     });
   }

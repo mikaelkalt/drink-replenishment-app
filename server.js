@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 //require('express-async-errors');
 const app = express();
 const port = process.env.PORT || 3000;
@@ -9,6 +10,8 @@ const configuration = new Configuration();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+// Add headers
+app.use(cors({origin: "http://localhost:4200"}));
 
 const routes = require("./api/routes/routes"); //importing route
 routes(app, configuration); //register the route

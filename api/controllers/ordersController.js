@@ -16,11 +16,14 @@ class OrdersController {
             done: Joi.bool().required()
         });
 
-        this.createOrderSchema = Joi.object().keys({
-            bar: Joi.string().required(),
+        this.drinkOrders = Joi.object().keys({
             drink: Joi.string().required(),
             amount: Joi.number().integer().min(1).max(100).required(),
-            done: Joi.bool()
+        });
+
+        this.createOrderSchema = Joi.object().keys({
+            bar: Joi.string().required(),
+            drinkOrders: Joi.array().items(this.drinkOrders)
         });
     }
     // request for GET /orders
@@ -52,20 +55,26 @@ class OrdersController {
             const validationResult = Joi.validate(order, this.createOrderSchema);
 
             if (validationResult.error) {
+                this.configuration.logger.debug("Validation error on order: ", validationResult.error);
                 res.status(400).send();
                 return;
             }
 
-            this.configuration.logger.debug("Create new order ", order);
-            const insertionResult = await this.configuration.dbCore.insert(this.tableName, order);
+            const convertedOrder = order.drinkOrders.map((d) => { 
+                return { bar: order.bar, drink: d.drink, amount: d.amount, done: false };
+            });
+            
+            this.configuration.logger.debug("Create new order ", convertedOrder);
+            const insertionResult = await this.configuration.dbCore.multiInsert(this.tableName, convertedOrder);
             const id = insertionResult.insertId;
             this.configuration.logger.info("Inserted new order with ID %d", id);
             order.id = id;
             return res.status(201).json(order);
         } catch (e) {
+            console.log(e);
             // TODO properly log error
             this.configuration.logger.error("Error while trying to create new order ", e);
-            return res.status(400).send();
+            return res.status(409).send();
         }
     }
 
