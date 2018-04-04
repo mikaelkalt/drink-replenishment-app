@@ -1,0 +1,15 @@
+.order-header-line {
+    margin-bottom: 5px !important;
+}
+
+.order-time-label {
+    color: rgba(255,255,255,0.7);
+    float: right;
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.order-bar-label {
+    font-size: 16px;
+    font-weight: 600;
+}

@@ -1,21 +1,42 @@
-<mat-toolbar color="primary">
+<mat-toolbar color="background" class="mat-elevation-z2">
   <mat-toolbar-row>
     <span class="toolbar-title">{{title}}</span>
   </mat-toolbar-row>
 </mat-toolbar>
 
-<mat-list>
-  <h3 mat-subheader>Offene Bestellungen</h3>
-  <mat-list-item *ngFor="let order of openOrders">
-    <h3 matLine> {{order.bar}} </h3>
-    <p matLine>
-      <span> {{order.amount}} x {{order.drink}} </span>
-      <span class="demo-2"> -- {{order.time | date }} </span>
-    </p>
-  </mat-list-item>
-  <mat-divider></mat-divider>
-  <h3 mat-subheader>Erledigte Bestellungen</h3>
-  <mat-list-item *ngFor="let order of doneOrders">
-    <h4 mat-line>{{order.drink}}</h4>
-  </mat-list-item>
-</mat-list>
+<mat-tab-group>
+  <mat-tab label="Offene Bestellungen">
+    <mat-selection-list (selectionChange)="selectionChanged($event)">
+      <mat-list-option *ngFor="let order of openOrders" [value]="order" [selected]="order.done" [disabled]="" checkboxPosition="before">
+        <div matLine class="order-header-line">
+          <span class="order-bar-label">{{order.bar}}</span>
+          <span class="order-time-label" *ngIf="isToday(order.time);else notToday">{{order.time | date:'hh:mm' }} </span>
+          <ng-template #notToday>
+            <span class="order-time-label">{{order.time | date:'dd. MMMM, hh:mm' }} </span>
+          </ng-template>
+        </div>
+        <p matLine>
+          {{order.amount}} x {{order.drink}}
+        </p>
+      </mat-list-option>
+    </mat-selection-list>
+  </mat-tab>
+  <mat-tab label="Erledigte Bestellungen">
+    <mat-list>
+      <mat-list-item *ngFor="let order of doneOrders.reverse()">
+        <mat-icon mat-list-icon>check_box</mat-icon>
+        <div matLine class="order-header-line">
+          <span class="order-bar-label">{{order.bar}}</span>
+          <span class="order-time-label" *ngIf="isToday(order.time);else notToday">{{order.time | date:'hh:mm' }} </span>
+          <ng-template #notToday>
+            <span class="order-time-label">{{order.time | date:'dd. MMMM, hh:mm' }} </span>
+          </ng-template>
+        </div>
+        <p matLine>
+          {{order.amount}} x {{order.drink}}
+        </p>
+
+      </mat-list-item>
+    </mat-list>
+  </mat-tab>
+</mat-tab-group>

@@ -7,6 +7,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTabsModule } from '@angular/material/tabs';
 
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -38,6 +39,7 @@ import { OrdersComponent } from './orders/orders.component';
     MatButtonModule,
     MatSliderModule,
     MatSnackBarModule,
+    MatTabsModule,
     HttpClientModule,
     AppRoutingModule
   ],
