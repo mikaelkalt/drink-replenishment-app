@@ -9,34 +9,19 @@
 </mat-toolbar>
 
 <mat-list>
-  <h3 mat-subheader>Soft Drinks</h3>
-  <mat-list-item *ngFor="let entry of getDrinksOfCategory(drinkCategories.SOFT_DRINKS)">
-    <h4 mat-line>{{entry.drink.name}}</h4>
-    <div class="amount" *ngIf="entry.order.amount">{{entry.order.amount}}</div>
-    <mat-slider min="0" max="{{5 * entry.drink.interval}}" step="entry.drink.interval" [(ngModel)]="entry.order.amount" thumbLabel></mat-slider>
-  </mat-list-item>
-  <mat-divider></mat-divider>
-  <h3 mat-subheader>Bier und Wein</h3>
-  <mat-list-item *ngFor="let entry of getDrinksOfCategory(drinkCategories.BEER_WINE)">
-    <h4 mat-line>{{entry.drink.name}}</h4>
-    <div class="amount" *ngIf="entry.order.amount">{{entry.order.amount}}</div>
-    <mat-slider min="0" max="{{5 * entry.drink.interval}}" step="entry.drink.interval" [(ngModel)]="entry.order.amount" thumbLabel></mat-slider>
-  </mat-list-item>
-  <mat-divider></mat-divider>
-  <h3 mat-subheader>Spirituosen</h3>
-  <mat-list-item *ngFor="let entry of getDrinksOfCategory(drinkCategories.SPIRITS)">
-    <h4 mat-line>{{entry.drink.name}}</h4>
-    <div class="amount" *ngIf="entry.order.amount">{{entry.order.amount}}</div>
-    <mat-slider min="0" max="{{5 * entry.drink.interval}}" step="entry.drink.interval" [(ngModel)]="entry.order.amount" thumbLabel></mat-slider>
-  </mat-list-item>
-  <mat-divider></mat-divider>
-  <h3 mat-subheader>Zubehör</h3>
-  <mat-list-item *ngFor="let entry of getDrinksOfCategory(drinkCategories.MATERIAL)">
-    <h4 mat-line>{{entry.drink.name}}</h4>
-    <div class="amount" *ngIf="entry.order.amount">{{entry.order.amount}}</div>
-    <mat-slider min="0" max="{{5 * entry.drink.interval}}" step="entry.drink.interval" [(ngModel)]="entry.order.amount" thumbLabel></mat-slider>
-  </mat-list-item>
-  <mat-divider></mat-divider>
+
+  <ng-container  *ngFor="let category of categories">
+      <h3 *ngIf="category == drinkCategories.SOFT_DRINKS && !isEmptyCategory(category)" mat-subheader>Soft Drinks</h3>
+      <h3 *ngIf="category == drinkCategories.BEER_WINE && !isEmptyCategory(category)" mat-subheader>Bier und Wein</h3>
+      <h3 *ngIf="category == drinkCategories.SPIRITS && !isEmptyCategory(category)" mat-subheader>Spirituosen</h3>
+      <h3 *ngIf="category == drinkCategories.MATERIAL && !isEmptyCategory(category)" mat-subheader>Zubehör</h3>
+      <mat-list-item *ngFor="let entry of getDrinksOfCategory(category)">
+        <h4 mat-line>{{entry.drink.name}}</h4>
+        <div class="amount" *ngIf="entry.order.amount">{{entry.order.amount}}</div>
+        <mat-slider min="0" max="{{5 * entry.drink.interval}}" step="entry.drink.interval" [(ngModel)]="entry.order.amount" thumbLabel></mat-slider>
+      </mat-list-item>
+      <mat-divider *ngIf="!isEmptyCategory(category)"></mat-divider>
+  </ng-container >
 </mat-list>
 
 <button class="order-button" mat-raised-button color="primary" (click)="submitOrder()">

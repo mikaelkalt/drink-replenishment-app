@@ -7,12 +7,12 @@
 <mat-tab-group>
   <mat-tab label="Offene Bestellungen">
     <mat-selection-list (selectionChange)="selectionChanged($event)">
-      <mat-list-option *ngFor="let order of openOrders" [value]="order" [selected]="order.done" [disabled]="" checkboxPosition="before">
+      <mat-list-option *ngFor="let order of getOpenOrders()" [value]="order" [selected]="order.done" [disabled]="" checkboxPosition="before">
         <div matLine class="order-header-line">
           <span class="order-bar-label">{{order.bar}}</span>
-          <span class="order-time-label" *ngIf="isToday(order.time);else notToday">{{order.time | date:'hh:mm' }} </span>
+          <span class="order-time-label" *ngIf="isToday(order.time);else notToday">{{order.time | date:'HH:mm' }} </span>
           <ng-template #notToday>
-            <span class="order-time-label">{{order.time | date:'dd. MMMM, hh:mm' }} </span>
+            <span class="order-time-label">{{order.time | date:'dd. MMMM, HH:mm' }} </span>
           </ng-template>
         </div>
         <p matLine>
@@ -23,19 +23,18 @@
   </mat-tab>
   <mat-tab label="Erledigte Bestellungen">
     <mat-list>
-      <mat-list-item *ngFor="let order of doneOrders.reverse()">
+      <mat-list-item *ngFor="let order of getDoneOrders().reverse()">
         <mat-icon mat-list-icon>check_box</mat-icon>
         <div matLine class="order-header-line">
           <span class="order-bar-label">{{order.bar}}</span>
-          <span class="order-time-label" *ngIf="isToday(order.time);else notToday">{{order.time | date:'hh:mm' }} </span>
+          <span class="order-time-label" *ngIf="isToday(order.time);else notToday">{{order.time | date:'HH:mm' }} </span>
           <ng-template #notToday>
-            <span class="order-time-label">{{order.time | date:'dd. MMMM, hh:mm' }} </span>
+            <span class="order-time-label">{{order.time | date:'dd. MMMM, HH:mm' }} </span>
           </ng-template>
         </div>
         <p matLine>
           {{order.amount}} x {{order.drink}}
         </p>
-
       </mat-list-item>
     </mat-list>
   </mat-tab>

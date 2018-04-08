@@ -12,6 +12,12 @@ export class OrderService {
 
   private ordersUrl = `${environment.apiUrl}orders`;
 
+  private httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
+
+
+
   constructor(private httpClient: HttpClient) { }
 
   public getAllOrders(): Observable<OrderResult[]> {
@@ -27,13 +33,13 @@ export class OrderService {
   }
 
   public submitOrder(order: Order): Observable<any> {
-    const httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-    };
-
-    return this.httpClient.post<Order>(this.ordersUrl, order, httpOptions).pipe(
+    return this.httpClient.post<Order>(this.ordersUrl, order, this.httpOptions).pipe(
       catchError(this.handleError<any>('submitOrder'))
     );
+  }
+
+  public updateOrder(order: OrderResult): Observable<any> {
+    return this.httpClient.put<OrderResult>(`${this.ordersUrl}/${order.id}`, order, this.httpOptions);
   }
 
   /**

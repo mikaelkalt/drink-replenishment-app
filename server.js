@@ -11,7 +11,7 @@ const configuration = new Configuration();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 // Add headers
-app.use(cors({origin: "http://localhost:4200"}));
+app.use(cors());
 
 const routes = require("./api/routes/routes"); //importing route
 routes(app, configuration); //register the route

@@ -20,6 +20,7 @@ export class BarsDetailsComponent implements OnInit {
   bar: Bar;
   drinksToCategoryMap;
   drinkCategories = DrinkCategory;
+  categories = Object.keys(DrinkCategory).filter(key => isNaN(Number(DrinkCategory[key])));
   currentOrder: Order;
 
   constructor(private router: Router,
@@ -47,6 +48,13 @@ export class BarsDetailsComponent implements OnInit {
 
   goBack(): void {
     this.router.navigate(['/bars']);
+  }
+
+  isEmptyCategory(category: DrinkCategory) {
+    if (this.drinksToCategoryMap[category]) {
+      return this.drinksToCategoryMap[category].length < 1;
+    }
+    return true;
   }
 
   getDrinksOfCategory(category: DrinkCategory) {

@@ -3,6 +3,8 @@ import { OrderResult } from '../model/orderResult';
 import { OrderService } from '../order.service';
 import { MatSelectionListChange, MatListOption, MatSelectionList } from '@angular/material';
 import { timeout } from 'rxjs/operators';
+import { Order } from '../model/order';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-orders',
@@ -12,17 +14,43 @@ import { timeout } from 'rxjs/operators';
 export class OrdersComponent implements OnInit {
   title = 'Baranoia Bestellungen';
 
-  openOrders: OrderResult[];
-  doneOrders: OrderResult[];
+  openOrders: {};
+  doneOrders: {};
 
   constructor(private orderService: OrderService) {
+    this.openOrders = {};
+    this.doneOrders = {};
   }
 
   ngOnInit() {
     this.orderService.getAllOrders().subscribe(result => {
-      this.doneOrders = result.filter(o => o.done);
-      this.openOrders = result.filter(o => !o.done);
+      result.filter(o => o.done).forEach(o => this.doneOrders[o.id] = o);
+      result.filter(o => !o.done).forEach(o => this.openOrders[o.id] = o);
     });
+    this.subscribeToData();
+  }
+
+  private subscribeToData(): void {
+    setTimeout(() => {
+      this.refreshData();
+    }, 5000);
+  }
+
+  private refreshData(): void {
+    this.orderService.getAllOrdersByDone(false).subscribe(result => {
+      if (result) {
+        result.forEach(order => this.openOrders[order.id] = order);
+      }
+      this.subscribeToData();
+    });
+  }
+
+  getOpenOrders() {
+    return Object.values(this.openOrders);
+  }
+
+  getDoneOrders() {
+    return Object.values(this.doneOrders);
   }
 
   isToday(d: string): boolean {
@@ -33,14 +61,26 @@ export class OrdersComponent implements OnInit {
       date.getDate() === today.getDate();
   }
 
-  selectionChanged(event: MatSelectionListChange) {
-    event.option.value.done = true;
-    setTimeout(() => {
-      const indexOf: number = this.openOrders.indexOf(event.option.value);
+  timeout(ms) {
+    return new Promise(resolve => setTimeout(() => resolve(), ms));
+  }
 
-      this.openOrders.splice(indexOf, 1);
-      this.doneOrders.push(event.option.value);
-    }, 1000);
+  async selectionChanged(event: MatSelectionListChange) {
+    const order: OrderResult = event.option.value;
+    order.done = true;
+
+    await timeout(3000);
+
+    this.orderService.updateOrder(order).subscribe(result => {
+      const orderResult: OrderResult = event.option.value;
+      delete this.openOrders[orderResult.id];
+      this.doneOrders[orderResult.id] = orderResult;
+    }, error => {
+      if (error) {
+        console.log('error while updating');
+        order.done = false;
+      }
+    });
 
   }
 

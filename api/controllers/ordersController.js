@@ -71,7 +71,6 @@ class OrdersController {
             order.id = id;
             return res.status(201).json(order);
         } catch (e) {
-            console.log(e);
             // TODO properly log error
             this.configuration.logger.error("Error while trying to create new order ", e);
             return res.status(409).send();

@@ -85,7 +85,7 @@ module.exports = class DbCore {
 
   getAll(tableName) {
     return Promise.using(this.getSqlConnection(), connection => {
-      const sql = `SELECT * FROM ${tableName}`;
+      const sql = `SELECT * FROM ${tableName} ORDER BY Id`;
       // eslint-disable-next-line no-unused-vars
       return connection.queryAsync(sql).then((rows, cols) => {
         return rows;
