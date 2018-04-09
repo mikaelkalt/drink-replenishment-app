@@ -109,7 +109,7 @@ export const BARS: Bar[] = [
         ]
     },
     {
-        id: 5, name: '50 shades of grey', drinks: [
+        id: 5, name: '50 Shades of Grey', drinks: [
             { name: ' Mineral (0.5l)', category: DrinkCategory.SOFT_DRINKS, interval: 1 },
             { name: 'Coca Cola ( 0.5l)', category: DrinkCategory.SOFT_DRINKS, interval: 1 },
             { name: 'Ice Tea Lemon (0.5l)', category: DrinkCategory.SOFT_DRINKS, interval: 1 },

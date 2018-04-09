@@ -4,7 +4,7 @@
   </mat-toolbar-row>
 </mat-toolbar>
 
-<mat-tab-group>
+<mat-tab-group class="content">
   <mat-tab label="Offene Bestellungen">
     <mat-selection-list (selectionChange)="selectionChanged($event)">
       <mat-list-option *ngFor="let order of getOpenOrders()" [value]="order" [selected]="order.done" [disabled]="" checkboxPosition="before">

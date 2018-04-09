@@ -8,13 +8,20 @@ body {
 
 mat-toolbar {
     text-transform: uppercase;
+    position: fixed;
+    z-index: 10;
+    top: 0;
 }
- 
+
+mat-toolbar + .content {
+    padding-top: 56px;
+}
+
 mat-toolbar .toolbar-title {
     flex: 1 1 auto;
     text-align: center;
 }
 
-.multi-line-snackbar{
+.multi-line-snackbar {
     white-space: pre-wrap;
 }

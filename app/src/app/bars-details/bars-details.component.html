@@ -4,13 +4,15 @@
       <mat-icon class="back-icon">arrow_back</mat-icon>
     </button>
     <span class="toolbar-title">{{bar.name}}</span>
-    <button style="visibility:hidden;"><mat-icon></mat-icon></button>
+    <button style="visibility:hidden;">
+      <mat-icon></mat-icon>
+    </button>
   </mat-toolbar-row>
 </mat-toolbar>
 
-<mat-list>
-
-  <ng-container  *ngFor="let category of categories">
+<div class="content">
+  <mat-list>
+    <ng-container *ngFor="let category of categories">
       <h3 *ngIf="category == drinkCategories.SOFT_DRINKS && !isEmptyCategory(category)" mat-subheader>Soft Drinks</h3>
       <h3 *ngIf="category == drinkCategories.BEER_WINE && !isEmptyCategory(category)" mat-subheader>Bier und Wein</h3>
       <h3 *ngIf="category == drinkCategories.SPIRITS && !isEmptyCategory(category)" mat-subheader>Spirituosen</h3>
@@ -21,9 +23,9 @@
         <mat-slider min="0" max="{{5 * entry.drink.interval}}" step="entry.drink.interval" [(ngModel)]="entry.order.amount" thumbLabel></mat-slider>
       </mat-list-item>
       <mat-divider *ngIf="!isEmptyCategory(category)"></mat-divider>
-  </ng-container >
-</mat-list>
-
-<button class="order-button" mat-raised-button color="primary" (click)="submitOrder()">
-  Bestellen
-</button>
+    </ng-container>
+  </mat-list>
+  <button class="order-button" mat-raised-button color="primary" (click)="submitOrder()">
+    Bestellen
+  </button>
+</div>
