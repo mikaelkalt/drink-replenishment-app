@@ -26,9 +26,9 @@ class Configuration {
         });
 
         this.dbCore = new DbCore({
-            dbHost: "localhost",
-            dbUsername: "root",
-            dbPassword: "mysql",
+            dbHost: "baranoia_db",
+            dbUsername: "baranoia",
+            dbPassword: "b4r4no1a",
             dbName: "baranoia",
             debugSql: true,
             logger: this.logger

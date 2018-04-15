@@ -1,0 +1,33 @@
+version: '3'
+services:
+  database:
+    image: mysql
+    container_name: baranoia_db
+    volumes:
+       - ./mysql/db:/var/lib/mysql
+       - ./mysql/init:/docker-entrypoint-initdb.d
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: mysql
+      MYSQL_DATABASE: baranoia
+      MYSQL_USER: baranoia
+      MYSQL_PASSWORD: b4r4no1a
+    expose: 
+      - "3306"
+  node_server: 
+    image: node:carbon
+    depends_on: 
+      - database
+    container_name: baranoia_server
+    user: node
+    working_dir: /home/node/app
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - ../:/home/node/app
+    ports:
+      - "8081:3000"
+    environment: 
+      NPM_CONFIG_PREFIX: /home/node/.npm-global
+      PATH: $PATH:/home/node/.npm-global/bin
+    command: "npm run-script build"
