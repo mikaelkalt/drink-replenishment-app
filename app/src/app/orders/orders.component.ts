@@ -39,7 +39,7 @@ export class OrdersComponent implements OnInit {
   private refreshData(): void {
     this.orderService.getAllOrdersByDone(false).subscribe(result => {
       if (result) {
-        result.forEach(order => this.openOrders[order.id] = order);
+        result.filter(order => !this.openOrders[order.id]).forEach(order => this.openOrders[order.id] = order);
       }
       this.subscribeToData();
     });
@@ -61,27 +61,28 @@ export class OrdersComponent implements OnInit {
       date.getDate() === today.getDate();
   }
 
-  timeout(ms) {
-    return new Promise(resolve => setTimeout(() => resolve(), ms));
+  delay(duration) {
+    return new Promise(resolve => setTimeout(resolve, duration));
   }
 
   async selectionChanged(event: MatSelectionListChange) {
     const order: OrderResult = event.option.value;
-    order.done = true;
+    order.done = !order.done;
 
-    await timeout(3000);
+    await this.delay(5000);
 
-    this.orderService.updateOrder(order).subscribe(result => {
-      const orderResult: OrderResult = event.option.value;
-      delete this.openOrders[orderResult.id];
-      this.doneOrders[orderResult.id] = orderResult;
-    }, error => {
-      if (error) {
-        console.log('error while updating');
-        order.done = false;
-      }
-    });
-
+    if (order.done) {
+      this.orderService.updateOrder(order).subscribe(result => {
+        const orderResult: OrderResult = event.option.value;
+        delete this.openOrders[orderResult.id];
+        this.doneOrders[orderResult.id] = orderResult;
+      }, error => {
+        if (error) {
+          console.log('error while updating');
+          order.done = false;
+        }
+      });
+    }
   }
 
 }
