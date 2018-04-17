@@ -1,9 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 /* @import '~@angular/material/prebuilt-themes/indigo-pink.css'; */
 
-body {
+html, body {
     margin: 0;
     font-family: Roboto, Arial, sans-serif;
+    height: 100%;
+    width: 100%;
 }
 
 mat-toolbar {
@@ -24,4 +26,14 @@ mat-toolbar .toolbar-title {
 
 .multi-line-snackbar {
     white-space: pre-wrap;
+}
+
+.launcher {
+    background-image: url('./assets/launch/launch.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center; 
+    width: 100%;
+    height: 100%;
 }
