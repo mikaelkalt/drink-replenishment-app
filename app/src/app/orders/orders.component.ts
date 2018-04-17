@@ -46,11 +46,11 @@ export class OrdersComponent implements OnInit {
   }
 
   getOpenOrders() {
-    return Object.values(this.openOrders);
+    return Object.keys(this.openOrders).map(k => this.openOrders[k]);
   }
 
   getDoneOrders() {
-    return Object.values(this.doneOrders);
+    return Object.keys(this.doneOrders).map(k => this.doneOrders[k]);
   }
 
   isToday(d: string): boolean {

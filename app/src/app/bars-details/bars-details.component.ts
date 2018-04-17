@@ -62,7 +62,7 @@ export class BarsDetailsComponent implements OnInit {
   }
 
   submitOrder() {
-    this.currentOrder.drinkOrders = [].concat.apply([], Object.values(this.drinksToCategoryMap))
+    this.currentOrder.drinkOrders = [].concat.apply([], Object.keys(this.drinksToCategoryMap).map(key => this.drinksToCategoryMap[key]))
       .filter((v) => v.order.amount > 0)
       .map((v) => v.order);
 
