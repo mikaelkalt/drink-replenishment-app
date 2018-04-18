@@ -9,6 +9,7 @@ import { DrinkOrder } from '../model/drinkOrder';
 import { OrderService } from '../order.service';
 import { MatSnackBar } from '@angular/material';
 import { OverlayContainer } from '@angular/cdk/overlay';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
 @Component({
   selector: 'app-bars-details',
@@ -16,6 +17,8 @@ import { OverlayContainer } from '@angular/cdk/overlay';
   styleUrls: ['./bars-details.component.css']
 })
 export class BarsDetailsComponent implements OnInit {
+
+  @BlockUI() blockUI: NgBlockUI;
 
   bar: Bar;
   drinksToCategoryMap;
@@ -62,12 +65,14 @@ export class BarsDetailsComponent implements OnInit {
   }
 
   submitOrder() {
+    this.blockUI.start('Bestellen...'); // Start blocking
     this.currentOrder.drinkOrders = [].concat.apply([], Object.keys(this.drinksToCategoryMap).map(key => this.drinksToCategoryMap[key]))
       .filter((v) => v.order.amount > 0)
       .map((v) => v.order);
 
     if (this.currentOrder.drinkOrders.length > 0) {
       this.orderService.submitOrder(this.currentOrder).subscribe((result) => {
+        this.blockUI.stop();
         if (!result) {
           this.snackBar.open('Bestellung konnte nicht ausgeführt werden. Versuche es später nochmals.', 'OK', {
             duration: 5000
@@ -84,6 +89,7 @@ export class BarsDetailsComponent implements OnInit {
         this.initOrdersInCategories();
       });
     } else {
+      this.blockUI.stop();
       this.snackBar.open('Du hast kein Getränk ausgewählt.', 'OK', {
         duration: 5000
       });

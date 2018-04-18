@@ -9,6 +9,8 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTabsModule } from '@angular/material/tabs';
 
+import { BlockUIModule } from 'ng-block-ui';
+
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -41,7 +43,8 @@ import { OrdersComponent } from './orders/orders.component';
     MatSnackBarModule,
     MatTabsModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BlockUIModule.forRoot()
   ],
   providers: [BarsService, OrderService],
   bootstrap: [AppComponent]
