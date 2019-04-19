@@ -1,6 +1,7 @@
 {
+  "name": "Baranoia Replenishment App",
   "short_name": "Baranoia",
-  "name": "Baranoia Bestellungs App",
+  "description": "An app to organize the replenishment during an event / festival.",  
   "icons": [
     {
       "src": "assets/icons/android_ic_launcher-36x36.png",
@@ -39,7 +40,7 @@
       "density": "4.0"
     }
   ],
-  "start_url": "/index.html",
+  "start_url": "index.html",
   "display": "fullscreen",
   "orientation": "portrait"
 }

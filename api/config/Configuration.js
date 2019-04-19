@@ -5,7 +5,7 @@ class Configuration {
 
     constructor() {
  
-        this.logger = new winston.Logger({
+        this.logger = winston.createLogger({
             level: "debug",
             transports: [
                 new winston.transports.Console({
@@ -26,9 +26,9 @@ class Configuration {
         });
 
         this.dbCore = new DbCore({
-            dbHost: "baranoia_db",
-            dbUsername: "baranoia",
-            dbPassword: "b4r4no1a",
+            dbHost: "localhost",
+            dbUsername: "root",
+            dbPassword: "mysql",
             dbName: "baranoia",
             debugSql: true,
             logger: this.logger

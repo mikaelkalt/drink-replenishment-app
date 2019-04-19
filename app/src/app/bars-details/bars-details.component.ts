@@ -6,15 +6,15 @@ import { DrinkCategory } from '../model/drinkCategory';
 import { Drink } from '../model/drinks';
 import { Order } from '../model/order';
 import { DrinkOrder } from '../model/drinkOrder';
-import { OrderService } from '../order.service';
 import { MatSnackBar } from '@angular/material';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
+import { OrderService } from '../orders.service';
 
 @Component({
   selector: 'app-bars-details',
   templateUrl: './bars-details.component.html',
-  styleUrls: ['./bars-details.component.css']
+  styleUrls: ['./bars-details.component.scss']
 })
 export class BarsDetailsComponent implements OnInit {
 
@@ -27,10 +27,10 @@ export class BarsDetailsComponent implements OnInit {
   currentOrder: Order;
 
   constructor(private router: Router,
-    private route: ActivatedRoute,
-    private barService: BarsService,
-    private orderService: OrderService,
-    public snackBar: MatSnackBar) { }
+              private route: ActivatedRoute,
+              private barService: BarsService,
+              private orderService: OrderService,
+              public snackBar: MatSnackBar) { }
 
   ngOnInit() {
     const id: number = Number(this.route.snapshot.paramMap.get('id'));
@@ -41,10 +41,10 @@ export class BarsDetailsComponent implements OnInit {
   }
 
   private initOrdersInCategories() {
-    this.drinksToCategoryMap = this.bar.drinks.reduce(function (groups, drink) {
-      const val = drink['category'];
+    this.drinksToCategoryMap = this.bar.drinks.reduce((groups, currentDrink) => {
+      const val = currentDrink.category;
       groups[val] = groups[val] || [];
-      groups[val].push({ drink: drink, order: new DrinkOrder(drink) });
+      groups[val].push({ drink: currentDrink, order: new DrinkOrder(currentDrink) });
       return groups;
     }, {});
   }
@@ -84,7 +84,7 @@ export class BarsDetailsComponent implements OnInit {
 
         this.snackBar.open(`Bestellung erfolgreich:\n${orders}`, 'OK', {
           duration: 5000,
-          extraClasses: ['multi-line-snackbar']
+          panelClass: ['multi-line-snackbar']
         });
         this.initOrdersInCategories();
       });

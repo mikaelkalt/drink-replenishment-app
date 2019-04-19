@@ -3,9 +3,8 @@ import { Order } from './model/order';
 import { environment } from '../environments/environment';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
 import { OrderResult } from './model/orderResult';
+import { Observable, of } from 'rxjs';
 
 @Injectable()
 export class OrderService {

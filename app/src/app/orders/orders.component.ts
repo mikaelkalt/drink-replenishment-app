@@ -1,15 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { OrderService } from '../orders.service';
 import { OrderResult } from '../model/orderResult';
-import { OrderService } from '../order.service';
-import { MatSelectionListChange, MatListOption, MatSelectionList } from '@angular/material';
-import { timeout } from 'rxjs/operators';
-import { Order } from '../model/order';
-import { Observable } from 'rxjs/Observable';
+import { MatSelectionListChange } from '@angular/material';
 
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
-  styleUrls: ['./orders.component.css']
+  styleUrls: ['./orders.component.scss']
 })
 export class OrdersComponent implements OnInit {
   title = 'Baranoia Bestellungen';
