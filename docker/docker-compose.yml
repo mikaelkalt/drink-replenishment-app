@@ -38,6 +38,5 @@ services:
     container_name: baranoia_proxy
     volumes: 
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./nginx/auth.htpasswd:/etc/nginx/.htpasswd
     ports: 
       - 80:80
