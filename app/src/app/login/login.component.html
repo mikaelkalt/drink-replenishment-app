@@ -1,0 +1,26 @@
+<mat-toolbar color="background" class="mat-elevation-z2">
+  <mat-toolbar-row>
+    <span class="toolbar-title">Login</span>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<div class="content" fxFlexFill fxLayout="row"  fxLayoutAlign="center center" >
+
+
+    <div fxFlex="80" fxLayout="column">
+        <h4>Bitte melde dich am System an.</h4>
+          <mat-form-field>
+            <input matInput placeholder="Passwort" type="password"  [formControl]="passwordFormControl" [errorStateMatcher]="matcher"> 
+             
+            <mat-error *ngIf="passwordFormControl.hasError('loginInvalid') && !passwordFormControl.hasError('required')">
+              Das Passwort ist falsch.
+            </mat-error>
+            <mat-error *ngIf="passwordFormControl.hasError('required')">
+              Bitte ein Password eingeben.
+            </mat-error>
+          </mat-form-field>
+          <button class="login-button" mat-raised-button color="primary" (click)="login()" [disabled]="!passwordFormControl.value">
+              Anmelden
+          </button>       
+    </div>
+</div>
